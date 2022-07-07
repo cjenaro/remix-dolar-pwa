@@ -6,6 +6,7 @@ import msTile70 from "~/icons/mstile-70x70.png";
 import msTile150 from "~/icons/mstile-150x150.png";
 import msTile310x150 from "~/icons/mstile-310x150.png";
 import msTile310 from "~/icons/mstile-310x310.png";
+import maskable from "~/icons/maskable_icon.png";
 
 export let loader: LoaderFunction = () => {
   return json(
@@ -55,6 +56,17 @@ export let loader: LoaderFunction = () => {
           src: msTile310,
           sizes: "310x310",
           type: "image/png",
+        },
+        {
+          src: msTile310,
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: maskable,
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable",
         },
       ],
     },

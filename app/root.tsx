@@ -54,42 +54,42 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "57x57",
     href: appleTouchIcon57,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "114x114",
     href: appleTouchIcon114,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "72x72",
     href: appleTouchIcon72,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "144x144",
     href: appleTouchIcon144,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "60x60",
     href: appleTouchIcon60,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "120x120",
     href: appleTouchIcon120,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "76x76",
     href: appleTouchIcon76,
   },
   {
-    rel: "apple-touch-icon-precomposed",
+    rel: "apple-touch-icon",
     sizes: "152x152",
     href: appleTouchIcon152,
   },
