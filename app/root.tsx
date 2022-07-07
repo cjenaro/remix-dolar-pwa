@@ -10,6 +10,27 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import msTile144 from "~/icons/mstile-144x144.png";
+import msTile70 from "~/icons/mstile-70x70.png";
+import msTile150 from "~/icons/mstile-150x150.png";
+import msTile310x150 from "~/icons/mstile-310x150.png";
+import msTile310 from "~/icons/mstile-310x310.png";
+
+import appleTouchIcon57 from "~/icons/apple-touch-icon-57x57.png";
+import appleTouchIcon114 from "~/icons/apple-touch-icon-114x114.png";
+import appleTouchIcon72 from "~/icons/apple-touch-icon-72x72.png";
+import appleTouchIcon144 from "~/icons/apple-touch-icon-144x144.png";
+import appleTouchIcon60 from "~/icons/apple-touch-icon-60x60.png";
+import appleTouchIcon120 from "~/icons/apple-touch-icon-120x120.png";
+import appleTouchIcon76 from "~/icons/apple-touch-icon-76x76.png";
+import appleTouchIcon152 from "~/icons/apple-touch-icon-152x152.png";
+
+import favicon196 from "~/icons/favicon-196x196.png";
+import favicon96 from "~/icons/favicon-96x96.png";
+import favicon32 from "~/icons/favicon-32x32.png";
+import favicon16 from "~/icons/favicon-16x16.png";
+import favicon12 from "~/icons/favicon-128.png";
+
 let isMount = true;
 
 export const meta: MetaFunction = () => ({
@@ -18,11 +39,11 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
   "application-name": "DolAR",
   "msapplication-TileColor": "#FFFFFF",
-  "msapplication-TileImage": "mstile-144x144.png",
-  "msapplication-square70x70logo": "mstile-70x70.png",
-  "msapplication-square150x150logo": "mstile-150x150.png",
-  "msapplication-wide310x150logo": "mstile-310x150.png",
-  "msapplication-square310x310logo": "mstile-310x310.png",
+  "msapplication-TileImage": msTile144,
+  "msapplication-square70x70logo": msTile70,
+  "msapplication-square150x150logo": msTile150,
+  "msapplication-wide310x150logo": msTile310x150,
+  "msapplication-square310x310logo": msTile310,
   description: "Dolar PWA",
   "theme-color": "#663399",
   "apple-mobile-web-app-capable": "yes",
@@ -34,53 +55,53 @@ export const links: LinksFunction = () => [
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "57x57",
-    href: "apple-touch-icon-57x57.png",
+    href: appleTouchIcon57,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "114x114",
-    href: "apple-touch-icon-114x114.png",
+    href: appleTouchIcon114,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "72x72",
-    href: "apple-touch-icon-72x72.png",
+    href: appleTouchIcon72,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "144x144",
-    href: "apple-touch-icon-144x144.png",
+    href: appleTouchIcon144,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "60x60",
-    href: "apple-touch-icon-60x60.png",
+    href: appleTouchIcon60,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "120x120",
-    href: "apple-touch-icon-120x120.png",
+    href: appleTouchIcon120,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "76x76",
-    href: "apple-touch-icon-76x76.png",
+    href: appleTouchIcon76,
   },
   {
     rel: "apple-touch-icon-precomposed",
     sizes: "152x152",
-    href: "apple-touch-icon-152x152.png",
+    href: appleTouchIcon152,
   },
   {
     rel: "icon",
     type: "image/png",
-    href: "favicon-196x196.png",
+    href: favicon196,
     sizes: "196x196",
   },
-  { rel: "icon", type: "image/png", href: "favicon-96x96.png", sizes: "96x96" },
-  { rel: "icon", type: "image/png", href: "favicon-32x32.png", sizes: "32x32" },
-  { rel: "icon", type: "image/png", href: "favicon-16x16.png", sizes: "16x16" },
-  { rel: "icon", type: "image/png", href: "favicon-128.png", sizes: "128x128" },
+  { rel: "icon", type: "image/png", href: favicon96, sizes: "96x96" },
+  { rel: "icon", type: "image/png", href: favicon32, sizes: "32x32" },
+  { rel: "icon", type: "image/png", href: favicon16, sizes: "16x16" },
+  { rel: "icon", type: "image/png", href: favicon12, sizes: "128x128" },
 ];
 
 export default function App() {
