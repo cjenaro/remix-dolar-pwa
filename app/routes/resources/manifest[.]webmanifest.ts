@@ -4,8 +4,8 @@ import type { LoaderFunction } from "@remix-run/node";
 export let loader: LoaderFunction = () => {
   return json(
     {
-      short_name: "PWA",
-      name: "Remix PWA",
+      short_name: "DolAR",
+      name: "DolAR",
       start_url: "/",
       display: "standalone",
       background_color: "#d3d7dd",
@@ -16,8 +16,8 @@ export let loader: LoaderFunction = () => {
           url: "/",
           icons: [
             {
-              src: "/icons/android-icon-96x96.png",
-              sizes: "96x96",
+              src: "/mstile-144x144.png",
+              sizes: "144x144",
               type: "image/png",
               purpose: "any monochrome",
             },
@@ -26,40 +26,29 @@ export let loader: LoaderFunction = () => {
       ],
       icons: [
         {
-          src: "/icons/android-icon-36x36.png",
-          sizes: "36x36",
-          type: "image/png",
-          density: "0.75",
-        },
-        {
-          src: "/icons/android-icon-48x48.png",
-          sizes: "48x48",
-          type: "image/png",
-          density: "1.0",
-        },
-        {
-          src: "/icons/android-icon-72x72.png",
-          sizes: "72x72",
-          type: "image/png",
-          density: "1.5",
-        },
-        {
-          src: "/icons/android-icon-96x96.png",
-          sizes: "96x96",
-          type: "image/png",
-          density: "2.0",
-        },
-        {
-          src: "/icons/android-icon-144x144.png",
+          src: "/mstile-144x144.png",
           sizes: "144x144",
           type: "image/png",
-          density: "3.0",
         },
         {
-          src: "/icons/android-icon-192x192.png",
-          sizes: "192x192",
+          src: "/mstile-70x70.png",
+          sizes: "70x70",
           type: "image/png",
-          density: "4.0",
+        },
+        {
+          src: "/mstile-150x150.png",
+          sizes: "150x150",
+          type: "image/png",
+        },
+        {
+          src: "/mstile-310x150.png",
+          sizes: "310x150",
+          type: "image/png",
+        },
+        {
+          src: "/mstile-310x310.png",
+          sizes: "310x310",
+          type: "image/png",
         },
       ],
     },
@@ -68,6 +57,6 @@ export let loader: LoaderFunction = () => {
         "Cache-Control": "public, max-age=600",
         "Content-Type": "application/manifest+json",
       },
-    },
+    }
   );
 };

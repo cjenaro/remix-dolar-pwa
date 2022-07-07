@@ -59,7 +59,13 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-        <Meta /> <link rel="manifest" href="/resources/manifest.webmanifest" />
+        <meta name="description" content="Dolar PWA" />
+        <meta name="theme-color" content="#663399" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-title" content="Dolar" />
+        <Meta />
+        <link rel="manifest" href="/resources/manifest.webmanifest" />
         <Links />
       </head>
       <body>
