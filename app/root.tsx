@@ -44,7 +44,8 @@ export const meta: MetaFunction = () => ({
   "msapplication-square150x150logo": msTile150,
   "msapplication-wide310x150logo": msTile310x150,
   "msapplication-square310x310logo": msTile310,
-  description: "Dolar PWA",
+  description:
+    "Dolar PWA es una calculadora dolar - pesos argentinos con las distintas cotizaciones del dolar.",
   "theme-color": "#663399",
   "apple-mobile-web-app-capable": "yes",
   "apple-mobile-web-app-status-bar-style": "black",
