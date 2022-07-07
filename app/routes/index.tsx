@@ -51,6 +51,14 @@ type LoaderData = {
   ars?: Data;
 };
 
+function getDolarName(d: string) {
+  if (d === "contadoliqui") return "CCL";
+  if (d === "dolarbolsa") return "MEP";
+  const dolar = d.replace("dolar", "");
+
+  return dolar.charAt(0).toUpperCase() + dolar.slice(1);
+}
+
 function transformDate(dateString?: string) {
   const date = new Date(`${dateString}Z`);
   return (
@@ -77,7 +85,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     "dolarturista",
     "dolarbolsa",
   ].map(async (d) => ({
-    name: d,
+    name: getDolarName(d),
     data: await fetch(URL + d).then((b) => b.json()),
   }));
 
@@ -387,7 +395,7 @@ export default function Index() {
                   defaultChecked={selected?.name === dolar.name}
                 />
                 <label htmlFor={dolar.name}>
-                  <span>{dolar.name.replace("dolar", "")}</span>
+                  <span>{dolar.name}</span>
                 </label>
               </li>
             ))}
