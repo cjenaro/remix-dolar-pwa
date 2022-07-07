@@ -5,7 +5,6 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  overflow: hidden;
 }
 
 main {
@@ -14,7 +13,7 @@ main {
   margin: 0 auto;
   max-width: 675px;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -22,25 +21,32 @@ main {
 
 form {
   width: 100%;
-  overflow: scroll;
 }
 
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
 }
 
 li {
+  display: inline-flex;
   margin-right: 1rem;
   margin-bottom: 1rem;
 }
 
 li:last-of-type {
   margin-right: 0;
+}
+
+button[type="submit"] {
+  padding: 1rem;
+  color: white;
+  background-color: deepskyblue;
+  border-radius: 1rem;
+  border: 0;
+  display: block;
+  width: 100%;
 }
 
 input[type="radio"] {
@@ -105,7 +111,7 @@ h6 span:first-of-type {
 
 .info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .info p {
@@ -118,13 +124,13 @@ h6 span:first-of-type {
 }
 
 .info p:first-of-type {
-  border-radius: 1rem 0 0 1rem;
-  border-right: 0;
+  border-radius: 1rem 1rem 0 0;
+  border-bottom: 0;
 }
 
 .info p:last-of-type {
-  border-radius: 0 1rem 1rem 0;
-  border-left: 0;
+  border-radius: 0 0 1rem 1rem;
+  border-top: 0;
 }
 
 .currency {

@@ -2,6 +2,7 @@ import type {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
+  Session,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
@@ -10,6 +11,7 @@ import { useEffect, useRef } from "react";
 import { commitSession, getSession } from "~/sessions";
 import styles from "~/styles/main.css";
 import debounce from "lodash.debounce";
+import { values } from "node-persist";
 
 export const links: LinksFunction = () => [
   {
@@ -91,6 +93,49 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 };
 
+function calcFromSession({
+  session,
+  data,
+  isARS = true,
+}: {
+  session: Session;
+  data: FormData;
+  isARS?: boolean;
+}) {
+  let values = Number(data?.get(isARS ? "ARS" : "USD"));
+  if (!values) {
+    values = Number(session.get("lastValueSet"));
+  }
+  const selected: Dolar = session.get("selected");
+  session.set(
+    "lastPerformedCalcAction",
+    isARS ? ACTIONS.CALC_ARS : ACTIONS.CALC_USD
+  );
+  session.set("lastValueSet", values);
+
+  if (!selected) {
+    throw new Error("No hay ningún valor de dolar seleccionado");
+  }
+
+  if (values !== 0) {
+    if (isARS) {
+      session.set("USD", {
+        compra: values / Number(selected.data.compra),
+        venta: values / Number(selected.data.venta),
+        avg: values / Number(calcAvg(selected)),
+      });
+    } else {
+      session.set("ARS", {
+        compra: values * Number(selected.data.compra),
+        venta: values * Number(selected.data.venta),
+        avg: values * Number(calcAvg(selected)),
+      });
+    }
+  }
+
+  return session;
+}
+
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   const session = await getSession(request);
@@ -103,43 +148,26 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (action === ACTIONS.CALC_USD) {
-    const usd = Number(data?.get("USD")) || 0;
-    const selected: Dolar = session.get("selected");
-
-    if (!selected) {
+    try {
+      const newSession = calcFromSession({ session, data, isARS: false });
+      return commitSession(newSession, request.url);
+    } catch (err) {
       return {
         error: true,
-        message: "No hay ningún valor de dolar seleccionado",
+        message: (err as Error).message,
       };
-    }
-
-    if (usd !== 0) {
-      session.set("ARS", {
-        compra: usd * Number(selected.data.compra),
-        venta: usd * Number(selected.data.venta),
-        avg: usd * Number(calcAvg(selected)),
-      });
-      return commitSession(session, request.url);
     }
   }
-  if (action === ACTIONS.CALC_ARS) {
-    const ars = Number(data?.get("ARS")) || 0;
-    const selected: Dolar = session.get("selected");
 
-    if (!selected) {
+  if (action === ACTIONS.CALC_ARS) {
+    try {
+      const newSession = calcFromSession({ session, data, isARS: true });
+      return commitSession(newSession, request.url);
+    } catch (err) {
       return {
         error: true,
-        message: "No hay ningún valor de dolar seleccionado",
+        message: (err as Error).message,
       };
-    }
-
-    if (ars !== 0) {
-      session.set("USD", {
-        compra: ars / Number(selected.data.compra),
-        venta: ars / Number(selected.data.venta),
-        avg: ars / Number(calcAvg(selected)),
-      });
-      return commitSession(session, request.url);
     }
   }
 
@@ -166,6 +194,34 @@ export const action: ActionFunction = async ({ request }) => {
     };
 
     session.set("selected", selected);
+    const lastPerformedCalcAction = session.get("lastPerformedCalcAction");
+
+    if (lastPerformedCalcAction === ACTIONS.CALC_ARS) {
+      console.log("======== RECALCULATING VALUES =======");
+      try {
+        const newSession = calcFromSession({ session, data, isARS: true });
+        return commitSession(newSession, request.url);
+      } catch (err) {
+        return {
+          error: true,
+          message: (err as Error).message,
+        };
+      }
+    }
+
+    if (lastPerformedCalcAction === ACTIONS.CALC_USD) {
+      console.log("======== RECALCULATING VALUES =======");
+      try {
+        const newSession = calcFromSession({ session, data, isARS: false });
+        return commitSession(newSession, request.url);
+      } catch (err) {
+        return {
+          error: true,
+          message: (err as Error).message,
+        };
+      }
+    }
+
     return commitSession(session, request.url);
   }
 
@@ -324,11 +380,13 @@ export default function Index() {
             ))}
           </ul>
         ) : null}
+
         <input type="hidden" name="action" value={ACTIONS.SELECT_DOLAR} />
         {has_js ? null : <button type="submit">Elegir</button>}
       </fetcher.Form>
       <fetcher.Form
         className="calc"
+        method="post"
         onChange={debounce(handleCalc, 1000)}
         onSubmit={handleSubmit}
       >
@@ -369,6 +427,7 @@ export default function Index() {
         </p>
       </div>
       <fetcher.Form
+        method="post"
         className="calc"
         onChange={debounce(handleCalc, 1000)}
         onSubmit={handleSubmit}
