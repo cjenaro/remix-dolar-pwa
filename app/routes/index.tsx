@@ -11,7 +11,6 @@ import { useEffect, useRef } from "react";
 import { commitSession, getSession } from "~/sessions";
 import styles from "~/styles/main.css";
 import debounce from "lodash.debounce";
-import { values } from "node-persist";
 
 export const links: LinksFunction = () => [
   {
@@ -51,6 +50,17 @@ type LoaderData = {
   usd?: Data;
   ars?: Data;
 };
+
+function transformDate(dateString?: string) {
+  const date = new Date(`${dateString}Z`);
+  return (
+    date.toLocaleDateString("es-AR", {
+      year: "2-digit",
+      month: "2-digit",
+      day: "2-digit",
+    }) + ` ${date.getHours()}:${date.getMinutes()}`
+  );
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request);
@@ -197,7 +207,6 @@ export const action: ActionFunction = async ({ request }) => {
     const lastPerformedCalcAction = session.get("lastPerformedCalcAction");
 
     if (lastPerformedCalcAction === ACTIONS.CALC_ARS) {
-      console.log("======== RECALCULATING VALUES =======");
       try {
         const newSession = calcFromSession({ session, data, isARS: true });
         return commitSession(newSession, request.url);
@@ -210,7 +219,6 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     if (lastPerformedCalcAction === ACTIONS.CALC_USD) {
-      console.log("======== RECALCULATING VALUES =======");
       try {
         const newSession = calcFromSession({ session, data, isARS: false });
         return commitSession(newSession, request.url);
@@ -338,6 +346,11 @@ export default function Index() {
           <span>Promedio:</span>
           <span>{calcAvg(selected)}</span>
         </h6>
+        {selected?.data?.fecha ? (
+          <p className="date">
+            Dato de la fecha: {transformDate(selected.data.fecha)}
+          </p>
+        ) : null}
       </div>
       <fetcher.Form
         method="post"

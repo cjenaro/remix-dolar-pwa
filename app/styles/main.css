@@ -76,6 +76,15 @@ input[type="radio"]:checked + label {
   justify-items: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 1em;
+  margin: 2em 0;
+}
+
+.prices h6 {
+  margin: 0;
+}
+
+.prices .date {
+  grid-column: -1/1;
 }
 
 h6 {
